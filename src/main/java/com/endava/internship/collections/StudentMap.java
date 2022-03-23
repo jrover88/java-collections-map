@@ -27,16 +27,20 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
     }
 
     @Override
+    public boolean containsKey(Object key) {
+        return false;
+    }
+
+    @Override
+    public boolean containsValue(Object value) {
+        return false;
+    }
+
     public boolean containsKey(K key) {
         //TODO
         return false;
     }
 
-    @Override
-    public boolean containsValue(V value) {
-        //TODO
-        return false;
-    }
 
     @Override
     public V get(Object o) {
@@ -82,17 +86,6 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
     }
 
 
-    @Override
-    public Integer put(K key, V value) {
-        return null;
-    }
-
-    @Override
-    public Integer put(K key, V value) {
-        //TODO
-
-        return null;
-    }
 
     @Override
     public V remove(Object o) {
@@ -105,15 +98,6 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
 
     }
 
-    @Override
-    public void putAll(Map<? extends K, ? extends Integer> m) {
-
-    }
-
-    @Override
-    public void putAll(Map<? extends Student, ? extends Integer> map) {
-        //TODO
-    }
 
     @Override
     public void clear() {
@@ -121,7 +105,7 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
     }
 
     @Override
-    public Set<Student> keySet() {
+    public Set<K> keySet() {
         //TODO
         return null;
     }
@@ -133,7 +117,7 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
     }
 
     @Override
-    public Set<Entry<Student, Integer>> entrySet() {
+    public Set<Entry<K, V>> entrySet() {
         //Ignore this for homework
         throw new UnsupportedOperationException();
     }
