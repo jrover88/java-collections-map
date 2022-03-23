@@ -11,7 +11,7 @@ public class StudentMap implements Map<Student, Integer> {
     @Override
     public int size() {
         //TODO
-        return 0;
+        return size;
     }
 
     @Override
