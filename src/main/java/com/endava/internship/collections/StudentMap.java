@@ -4,9 +4,15 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class StudentMap implements Map<Student, Integer> {
+public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
 
     private int size;
+    Node<K, V> root;
+
+    public StudentMap() {
+        this.size = 0;
+        this.root = null;
+    }
 
     @Override
     public int size() {
@@ -17,37 +23,91 @@ public class StudentMap implements Map<Student, Integer> {
     @Override
     public boolean isEmpty() {
         //TODO
-        return false;
+        return size > 0;
     }
 
     @Override
-    public boolean containsKey(Object o) {
+    public boolean containsKey(K key) {
         //TODO
         return false;
     }
 
     @Override
-    public boolean containsValue(Object o) {
+    public boolean containsValue(V value) {
         //TODO
         return false;
     }
 
     @Override
-    public Integer get(Object o) {
+    public V get(Object o) {
         //TODO
         return null;
     }
 
     @Override
-    public Integer put(Student student, Integer integer) {
+    public V put(K key, V value) {
+        Node<K, V> newNode = new Node<>(key, value);
+        if(this.root == null) {
+            root = newNode;
+            size++;
+            return null;
+        }
+        return this.put(this.root, newNode);
+    }
+
+    private V put(Node<K,V> currentNode, Node<K,V> newNode) {
+        if(newNode.getKey().compareTo(currentNode.getKey()) > 0) {
+            if(currentNode.getRight() == null) {
+                currentNode.setRight(newNode);
+            } else {
+                this.put(currentNode.getRight(), newNode);
+            }
+        }
+
+        if(newNode.getKey().compareTo(currentNode.getKey()) < 0) {
+            if(currentNode.getLeft() == null) {
+                currentNode.setLeft(newNode);
+            } else {
+                this.put(currentNode.getLeft(), newNode);
+            }
+        }
+
+        if(newNode.getKey().compareTo(currentNode.getKey()) == 0) {
+            V oldValue = currentNode.getValue();
+            currentNode.setValue(newNode.getValue());
+            return oldValue;
+        }
+        this.size++;
+        return null;
+    }
+
+
+    @Override
+    public Integer put(K key, V value) {
+        return null;
+    }
+
+    @Override
+    public Integer put(K key, V value) {
+        //TODO
+
+        return null;
+    }
+
+    @Override
+    public V remove(Object o) {
         //TODO
         return null;
     }
 
     @Override
-    public Integer remove(Object o) {
-        //TODO
-        return null;
+    public void putAll(Map<? extends K, ? extends V> m) {
+
+    }
+
+    @Override
+    public void putAll(Map<? extends K, ? extends Integer> m) {
+
     }
 
     @Override
@@ -67,7 +127,7 @@ public class StudentMap implements Map<Student, Integer> {
     }
 
     @Override
-    public Collection<Integer> values() {
+    public Collection<V> values() {
         //TODO
         return null;
     }
@@ -77,5 +137,7 @@ public class StudentMap implements Map<Student, Integer> {
         //Ignore this for homework
         throw new UnsupportedOperationException();
     }
+
+
 }
 

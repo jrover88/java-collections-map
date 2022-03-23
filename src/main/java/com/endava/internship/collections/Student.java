@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * The class that defines the element that will be contained by your collection
  */
-public class Student //TODO consider implementing any interfaces necessary for your collection
+public class Student implements Comparable<Student>//TODO consider implementing any interfaces necessary for your collection
 {
     private String name;
     private LocalDate dateOfBirth;
@@ -17,11 +17,21 @@ public class Student //TODO consider implementing any interfaces necessary for y
         this.details = details;
     }
 
+    @Override
+    public int compareTo(Student o) {
+        return this.name.compareTo(o.getName());
+    }
+
     public String getName() { return name; }
 
     public LocalDate getDateOfBirth() { return dateOfBirth; }
 
     public String getDetails() { return details; }
+
+    public static void main(String[] args) {
+
+    }
+
 
     /*
     TODO consider overriding any methods for this object to function properly within a collection:
