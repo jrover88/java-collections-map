@@ -32,6 +32,11 @@ public class Student implements Comparable<Student>//TODO consider implementing 
 
     public String getDetails() { return details; }
 
+    @Override
+    public String toString() {
+        return "Name: " + this.name + "\nDate of birth: " + this.dateOfBirth + "\nDetails: " + this.details;
+    }
+
     public static void main(String[] args) {
         StudentMap<Student, Integer> treeMap = new StudentMap<>();
         Student fedor = new Student("Fedor", LocalDate.of(1995, 11, 28), "none");
@@ -42,6 +47,7 @@ public class Student implements Comparable<Student>//TODO consider implementing 
         System.out.println(treeMap.containsKey(alex));
         treeMap.put(alex, 700);
         System.out.println(treeMap.containsKey(alex));
+        System.out.println(treeMap.get(alex));
 
     }
 

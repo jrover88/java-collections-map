@@ -66,10 +66,19 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
 
 
     @Override
-    public V get(Object o) {
+    public V get(Object key) { //student, integer
         //TODO
+        K keyObject = null;
+        try {
+            keyObject = (K) key;
+        }
+        catch (ClassCastException e) {
+            System.out.println(e.getMessage());
+        }
+        Node<K, V> node = this.find(keyObject);
+        V value = node.getValue();
+        return value;
 
-        return null;
     }
 
     @Override
@@ -113,7 +122,7 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
 
     @Override
     public V remove(Object o) {
-        K keyObject = null; // ?
+        K keyObject = null;
         try {
             keyObject = (K) o;
         }
