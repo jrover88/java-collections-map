@@ -53,7 +53,7 @@ public class Node<K,V> {
         return node.getLeft();
     }
 
-    public void clear(Node<K, V> node) {
+    public void clear() {
         left = null;
         right = null;
         key = null;

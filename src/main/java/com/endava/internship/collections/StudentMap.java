@@ -64,6 +64,26 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
         return current;
     }
 
+    private Node<K, V> findWithParent(K key, Node<K, V> parent) {
+        Node<K,V> current = this.root;
+        parent = null;
+        while (current != null) {
+            int result = current.getKey().compareTo(key);
+            if(result > 0) {
+                parent = current;
+                current = current.getLeft();
+            }
+            else if (result < 0) {
+                parent = current;
+                current = current.getRight();
+            }
+            else {
+                break;
+            }
+        }
+        return current;
+    }
+
 
     @Override
     public V get(Object key) { //student, integer
@@ -130,29 +150,67 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
             System.out.println(e.getMessage());
         }
 
-        if(this.root == null) {
+        Node<K, V> current, parent = null;
+        current = this.findWithParent(keyObject, parent);
+        V value = current.getValue();
+        if (current == null)
+        {
             return null;
         }
+        this.size--;
 
-        return this.remove(this.root, keyObject);
-    }
+        if(current.getRight() == null) {
+            if(parent == null) {
+                this.root = current.getLeft();
+            }
+            else {
+                int result = parent.getKey().compareTo(current.getKey());
 
-
-    private V remove(Node<K, V> currentNode, K key) {
-
-        if(currentNode.getKey().compareTo(key) == 0) {
-            V value = currentNode.getValue();
-            if(currentNode.getLeft() == null && currentNode.getRight() == null) {
-                currentNode.clear(currentNode);
+                if(result > 0) {
+                    parent.setLeft(current.getLeft());
+                }else if (result < 0) {
+                    parent.setRight(current.getLeft());
+                }
+            }
+        } else if(current.getRight().getLeft() == null){
+            current.getRight().setLeft(current.getLeft());
+            if(parent == null) {
+                this.root = current.getRight();
+            } else {
+                int result = parent.getKey().compareTo(current.getKey());
+                if (result > 0) {
+                    parent.setLeft(current.getRight());
+                } else if (result < 0) {
+                    parent.getRight().setRight(current.getRight());
+                }
             }
 
-            if(currentNode.getRight() == null) {
-
+        } else {
+            Node<K,V> mostLeft = current.getRight().getLeft();
+            Node<K,V> mostLeftParent = current.getRight();
+            while(mostLeft.getLeft() != null) {
+                mostLeftParent = mostLeft;
+                mostLeft = mostLeft.getLeft();
             }
-            return value;
+            mostLeftParent.setLeft(mostLeft.getRight());
+            mostLeft.setLeft(current.getLeft());
+            mostLeft.setRight(current.getRight());
+            if(parent == null) {
+                this.root = mostLeft;
+            } else {
+                int result = parent.getKey().compareTo(current.getKey());
+                if(result > 0) {
+                    parent.setLeft(mostLeft);
+                } else if(result < 0) {
+                    parent.setRight(mostLeft);
+                }
+            }
+
         }
-        return null;
+
+        return value;
     }
+
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {

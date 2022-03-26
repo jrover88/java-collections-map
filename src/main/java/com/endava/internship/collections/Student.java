@@ -38,7 +38,7 @@ public class Student implements Comparable<Student>//TODO consider implementing 
     }
 
     public static void main(String[] args) {
-        StudentMap<Student, Integer> treeMap = new StudentMap<>();
+/*        StudentMap<Student, Integer> treeMap = new StudentMap<>();
         Student fedor = new Student("Fedor", LocalDate.of(1995, 11, 28), "none");
         Student boris = new Student("Boris", LocalDate.of(1998, 9, 15), "none");
         Student alex = new Student("alex", LocalDate.of(1995, 1, 5), "none");
@@ -47,8 +47,15 @@ public class Student implements Comparable<Student>//TODO consider implementing 
         System.out.println(treeMap.containsKey(alex));
         treeMap.put(alex, 700);
         System.out.println(treeMap.containsKey(alex));
-        System.out.println(treeMap.get(alex));
-
+        System.out.println(treeMap.get(alex));*/
+        StudentMap<Integer, String> testTree = new StudentMap<>();
+        testTree.put(11, "a");
+        testTree.put(5, "b");
+        testTree.put(9, "c");
+        testTree.put(8, "d");
+        testTree.put(7, "e");
+        testTree.put(6, "f");
+        System.out.println(testTree.remove(5));
     }
 
 
