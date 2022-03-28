@@ -1,18 +1,21 @@
 package com.endava.internship.collections;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
+public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implements Map<K,V> {
 
     private int size;
-    Node<K, V> root;
+    private Node<K, V> root;
+
 
     public StudentMap() {
         this.size = 0;
         this.root = null;
+    }
+
+    public Node<K, V> getRoot() {
+        return root;
     }
 
     @Override
@@ -31,8 +34,57 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
 
     @Override
     public boolean containsValue(Object value) {
-        return false;
+        V valueObject;
+        try {
+            valueObject = (V) value;
+        }
+        catch (ClassCastException e) {
+            return false;
+        }
+        return this.containsValue(this.root, valueObject) != null;
     }
+
+/*    private boolean containsValue(Node<K,V> node, V valueObject) {
+
+        if(node != null) {
+            if(node.getValue().equals(valueObject)) return true;
+            this.containsValue(node.getLeft(), valueObject);
+            this.containsValue(node.getRight(), valueObject);
+        }
+        return false;
+    }*/
+
+    private Node<K,V> containsValue(Node<K,V> node, V value) {
+        Node<K,V> currentNode = this.root;
+        V valueNode = this.root.getValue();
+        while (currentNode != null) {
+            int result = currentNode.getValue().compareTo(value);
+            if (result < 0) {
+                currentNode = currentNode.getRight();
+            } else if (result > 0) {
+                currentNode = currentNode.getLeft();
+            } else {
+                return currentNode;
+            }
+        }
+        return currentNode;
+    }
+
+    public void showInOrder() {
+        showInOrder(this.root);
+    }
+
+    private void showInOrder(Node<K,V> node) {
+        if(node != null) {
+            this.showInOrder(node.getLeft());
+            System.out.println(node.getKey());
+            this.showInOrder(node.getRight());
+        }
+    }
+
+    void print(Consumer<K> consumer, K message) {
+        consumer.accept(message);
+    };
 
     @Override
     public boolean containsKey(Object key) {
@@ -64,9 +116,9 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
         return current;
     }
 
-    private Node<K, V> findWithParent(K key, Node<K, V> parent) {
+    private Node<K, V> findParent(K key) {
         Node<K,V> current = this.root;
-        parent = null;
+        Node<K,V> parent = null;
         while (current != null) {
             int result = current.getKey().compareTo(key);
             if(result > 0) {
@@ -81,7 +133,7 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
                 break;
             }
         }
-        return current;
+        return parent;
     }
 
 
@@ -109,6 +161,7 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
             size++;
             return null;
         }
+        this.size++;
         return this.put(this.root, newNode);
     }
 
@@ -134,7 +187,7 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
             currentNode.setValue(newNode.getValue());
             return oldValue;
         }
-        this.size++;
+
         return null;
     }
 
@@ -149,9 +202,13 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
         catch (ClassCastException e) {
             System.out.println(e.getMessage());
         }
-
+        if(!containsKey(keyObject)) {
+            return null;
+        }
         Node<K, V> current, parent = null;
-        current = this.findWithParent(keyObject, parent);
+        current = this.find(keyObject);
+        parent = this.findParent(keyObject);
+
         V value = current.getValue();
         if (current == null)
         {
@@ -214,8 +271,10 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-
+        for (Map.Entry<? extends K, ? extends V> e : m.entrySet())
+            put(e.getKey(), e.getValue());
     }
+
 
 
     @Override
@@ -228,20 +287,53 @@ public class StudentMap<K extends Comparable<K>, V> implements Map<K,V> {
     @Override
     public Set<K> keySet() {
         //TODO
-        return null;
+        Set<K> set = new HashSet<>();
+
+        return this.addToSet(set, this.root);
+    }
+
+    private Set<K> addToSet(Set<K> set, Node<K,V> node) {
+        if(node != null) {
+            this.addToSet(set, node.getLeft());
+            set.add(node.getKey());
+            this.addToSet(set, node.getRight());
+        }
+        return set;
     }
 
     @Override
     public Collection<V> values() {
         //TODO
-        ArrayList<V> arr = new ArrayList<>();
-        return null;
+        List<V> list = new ArrayList<>();
+
+        return this.addToList(list, this.root);
+    }
+
+    private Collection<V> addToList(Collection<V> list, Node<K,V> node) {
+        if(node != null) {
+            this.addToList(list, node.getLeft());
+            list.add(node.getValue());
+            this.addToList(list, node.getRight());
+        }
+        return list;
     }
 
     @Override
     public Set<Entry<K, V>> entrySet() {
         //Ignore this for homework
-        throw new UnsupportedOperationException();
+        Set<Entry<K, V>> entrySet = new HashSet<>();
+        return this.addToSet(this.root, entrySet);
+//        throw new UnsupportedOperationException();
+    }
+
+    private Set<Entry<K, V>> addToSet(Node<K, V> node, Set<Entry<K, V>> set) {
+        if(node != null) {
+            MyEntry<K, V> entry = new MyEntry<>(node.getKey(), node.getValue());
+            set.add(entry);
+            this.addToSet(node.getLeft(), set);
+            this.addToSet(node.getRight(), set);
+        }
+        return set;
     }
 
 

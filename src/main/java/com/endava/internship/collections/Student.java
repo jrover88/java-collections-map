@@ -1,6 +1,10 @@
 package com.endava.internship.collections;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  * The class that defines the element that will be contained by your collection
@@ -37,26 +41,7 @@ public class Student implements Comparable<Student>//TODO consider implementing 
         return "Name: " + this.name + "\nDate of birth: " + this.dateOfBirth + "\nDetails: " + this.details;
     }
 
-    public static void main(String[] args) {
-/*        StudentMap<Student, Integer> treeMap = new StudentMap<>();
-        Student fedor = new Student("Fedor", LocalDate.of(1995, 11, 28), "none");
-        Student boris = new Student("Boris", LocalDate.of(1998, 9, 15), "none");
-        Student alex = new Student("alex", LocalDate.of(1995, 1, 5), "none");
-        Student steven = new Student("Steven", LocalDate.of(1995, 4, 8), "none");
 
-        System.out.println(treeMap.containsKey(alex));
-        treeMap.put(alex, 700);
-        System.out.println(treeMap.containsKey(alex));
-        System.out.println(treeMap.get(alex));*/
-        StudentMap<Integer, String> testTree = new StudentMap<>();
-        testTree.put(11, "a");
-        testTree.put(5, "b");
-        testTree.put(9, "c");
-        testTree.put(8, "d");
-        testTree.put(7, "e");
-        testTree.put(6, "f");
-        System.out.println(testTree.remove(5));
-    }
 
 
     /*
