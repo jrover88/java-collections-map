@@ -8,12 +8,6 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
     private int size;
     private Node<K, V> root;
 
-
-    public StudentMap() {
-        this.size = 0;
-        this.root = null;
-    }
-
     public Node<K, V> getRoot() {
         return root;
     }
@@ -44,15 +38,6 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
         return this.containsValue(this.root, valueObject) != null;
     }
 
-/*    private boolean containsValue(Node<K,V> node, V valueObject) {
-
-        if(node != null) {
-            if(node.getValue().equals(valueObject)) return true;
-            this.containsValue(node.getLeft(), valueObject);
-            this.containsValue(node.getRight(), valueObject);
-        }
-        return false;
-    }*/
 
     private Node<K,V> containsValue(Node<K,V> node, V value) {
         Node<K,V> currentNode = this.root;
@@ -138,7 +123,7 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
 
 
     @Override
-    public V get(Object key) { //student, integer
+    public V get(Object key) {
         //TODO
         K keyObject = null;
         try {
@@ -276,7 +261,6 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
     }
 
 
-
     @Override
     public void clear() {
         //TODO
@@ -303,7 +287,6 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
 
     @Override
     public Collection<V> values() {
-        //TODO
         List<V> list = new ArrayList<>();
 
         return this.addToList(list, this.root);
@@ -320,10 +303,8 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        //Ignore this for homework
         Set<Entry<K, V>> entrySet = new HashSet<>();
         return this.addToSet(this.root, entrySet);
-//        throw new UnsupportedOperationException();
     }
 
     private Set<Entry<K, V>> addToSet(Node<K, V> node, Set<Entry<K, V>> set) {

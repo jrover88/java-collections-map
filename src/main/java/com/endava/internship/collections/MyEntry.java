@@ -1,7 +1,6 @@
 package com.endava.internship.collections;
 
 import java.util.Map;
-import java.util.Set;
 
 public class MyEntry<K,V> implements Map.Entry<K, V>{
     private K key;
