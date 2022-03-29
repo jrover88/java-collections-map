@@ -133,8 +133,8 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
             System.out.println(e.getMessage());
         }
         Node<K, V> node = this.find(keyObject);
-        V value = node.getValue();
-        return value;
+
+        return node == null ? null : node.getValue();
 
     }
 
