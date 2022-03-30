@@ -24,7 +24,6 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
         return size == 0;
     }
 
-//
 
     @Override
     public boolean containsValue(Object value) {
@@ -35,24 +34,33 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
         catch (ClassCastException e) {
             return false;
         }
+
         return this.containsValue(this.root, valueObject) != null;
     }
 
 
     private Node<K,V> containsValue(Node<K,V> node, V value) {
-        Node<K,V> currentNode = this.root;
-        V valueNode = this.root.getValue();
-        while (currentNode != null) {
-            int result = currentNode.getValue().compareTo(value);
-            if (result < 0) {
-                currentNode = currentNode.getRight();
-            } else if (result > 0) {
-                currentNode = currentNode.getLeft();
-            } else {
-                return currentNode;
+
+        Stack<Node<K,V>> stack = new Stack<> ();
+        while (node!=null || !stack.empty()) {
+            if (!stack.empty()) {
+                node = stack.pop();
+                if (node.getValue().compareTo(value) == 0) {
+                    return node;
+                }
+                if (node.getRight()!=null) {
+                    node = node.getRight();
+                }
+                else {
+                    node = null;
+                }
+            }
+            while (node!=null) {
+                stack.push(node);
+                node=node.getLeft();
             }
         }
-        return currentNode;
+        return null;
     }
 
     public void showInOrder() {
@@ -67,9 +75,6 @@ public class StudentMap<K extends Comparable<K>, V extends Comparable<V>> implem
         }
     }
 
-    void print(Consumer<K> consumer, K message) {
-        consumer.accept(message);
-    };
 
     @Override
     public boolean containsKey(Object key) {
