@@ -12,36 +12,29 @@ public class StudentMapTests{
     private Map<Integer,String> mapToAdd;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         map = new StudentMap<>();
         mapToAdd = new StudentMap<>();
     }
 
 
     @Test
-    public void initialMapIsEmpty(){
+    void initialMapIsEmpty(){
         assertTrue(map.isEmpty());
         assertEquals(0, map.size());
     }
 
     @Test
-    public void mapIsNotEmpty(){
+    void mapIsNotEmpty(){
         map.put(1, "a");
 
         assertFalse(map.isEmpty());
         assertEquals(1, map.size());
     }
 
-//    @Test
-//    public void creatingAMap() {
-//        StudentMap<Integer,String> mapCreated = new StudentMap<>();
-//
-//        assertTrue(mapCreated.isEmpty());
-//        assertEquals(0, mapCreated.size());
-//    }
 
     @Test
-    public void mapContainsAValue() {
+    void mapContainsAValue() {
         map.put(5, "test");
         map.put(7, "a");
         map.put(4, "r");
@@ -52,7 +45,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapDoesNotContainAValue() {
+    void mapDoesNotContainAValue() {
         map.put(5, "test");
         map.put(6, "dog");
         map.put(7, "cat");
@@ -63,7 +56,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapContainsAKey() {
+    void mapContainsAKey() {
         map.put(7, "r");
         map.put(5, "r");
         map.put(9, "r");
@@ -74,7 +67,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapDoesNotContainAKey() {
+    void mapDoesNotContainAKey() {
         map.put(7, "r");
         map.put(5, "r");
         map.put(9, "r");
@@ -84,27 +77,23 @@ public class StudentMapTests{
         assertFalse(map.containsKey(62));
     }
 
-//    @Test
-//    public void findAKey() {
-//        map.put(7, "r");
-//    }
 
     @Test
-    public void mapGettingAnObject_IfAnObjectExists() {
+    void mapGettingAnObject_IfAnObjectExists() {
         map.put(3, "s");
 
         assertEquals("s", map.get(3));
     }
 
     @Test
-    public void mapGettingAnObject_IfAnObjectDoesNotExist() {
+    void mapGettingAnObject_IfAnObjectDoesNotExist() {
         map.put(3, "s");
 
         assertNull(map.get(7));
     }
 
     @Test
-    public void mapAddingAnObject() {
+    void mapAddingAnObject() {
         map.put(5, "s");
         map.put(7, "b");
         map.put(8, "e");
@@ -116,7 +105,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapRemovingFirstElement() {
+    void mapRemovingFirstElement() {
         map.put(11, "a");
         map.put(15, "aa");
 
@@ -128,7 +117,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapDoesNotContainRemovingElement() {
+    void mapDoesNotContainRemovingElement() {
         map.put(11, "a");
         map.put(15, "aa");
 
@@ -136,7 +125,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapRemovingAnElement_WhichDoesNotHaveRightChild() {
+    void mapRemovingAnElement_WhichDoesNotHaveRightChild() {
         map.put(15, "a");
         map.put(13, "b");
         map.put(11, "c");
@@ -146,7 +135,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapRemovingAnElement_WhichHasRightChild_WhichHasLeftChild() {
+    void mapRemovingAnElement_WhichHasRightChild_WhichHasLeftChild() {
         map.put(11, "a");
         map.put(15, "aa");
         map.put(5, "b");
@@ -160,7 +149,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapPutAll() {
+    void mapPutAll() {
         mapToAdd.put(11, "a");
         mapToAdd.put(15, "aa");
         mapToAdd.put(5, "b");
@@ -173,7 +162,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapClearing() {
+    void mapClearing() {
         map.put(11, "a");
         map.put(15, "aa");
 
@@ -183,11 +172,11 @@ public class StudentMapTests{
         assertFalse(map.containsKey(11));
         assertFalse(map.containsKey(15));
         assertTrue(map.isEmpty());
-//        assertNull(map.getRoot()); // doesn't work ?
     }
 
+
     @Test
-    public void mapKeySet() {
+    void mapKeySet() {
         map.put(11, "a");
         map.put(15, "aa");
         map.put(5, "b");
@@ -204,7 +193,7 @@ public class StudentMapTests{
     }
 
     @Test
-    public void mapCollectionsValues() {
+    void mapCollectionsValues() {
         map.put(11, "a");
         map.put(15, "aa");
         map.put(5, "b");
