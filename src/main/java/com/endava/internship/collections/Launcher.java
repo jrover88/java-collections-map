@@ -17,11 +17,18 @@ public class Launcher {
         System.out.println(treeMap.get(alex));*/
         StudentMap<Integer, String> testTree = new StudentMap<>();
         testTree.put(11, "a");
+        testTree.put(15, "aa");
         testTree.put(5, "b");
         testTree.put(9, "c");
         testTree.put(8, "d");
         testTree.put(7, "e");
         testTree.put(6, "f");
+        testTree.showInOrder();
+        System.out.println(testTree.containsValue("a"));
+        System.out.println(testTree.containsValue("bFF"));
+        System.out.println(testTree.containsValue("c"));
+        System.out.println(testTree.getRoot());
+        System.out.println(testTree.get(855));
         System.out.println(testTree.size());
         System.out.println(testTree.remove(11));
         System.out.println(testTree.remove(100));
@@ -31,6 +38,7 @@ public class Launcher {
         System.out.println("contains value: " + testTree.containsValue("c"));
         System.out.println(testTree.containsKey(6));
         Set set = testTree.keySet();
+        System.out.println("Setttttttttttt size: " + set.size());
         System.out.println(set);
         Collection col =  testTree.values();
         System.out.println(col);
